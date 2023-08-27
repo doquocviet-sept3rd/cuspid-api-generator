@@ -10,6 +10,11 @@ import org.cuspid.system.CuspidSystem;
  */
 
 public class LOGGER {
+    /**
+     * Logger instance
+     *
+     * @return the logger instance
+     */
     public static Log instance() {
         return (Log) CuspidSystem.getProperty(CuspidSystemProperty.LOG);
     }

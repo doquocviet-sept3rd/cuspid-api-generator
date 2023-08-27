@@ -25,6 +25,7 @@ import java.util.Set;
 
 /**
  * @author Do Quoc Viet
+ * The main code for the application
  */
 
 @SuppressWarnings("unused")
@@ -35,6 +36,12 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     private MavenProject mavenProject;
 
+    /**
+     * Executes the application
+     *
+     * @throws MojoExecutionException when the application execution is interrupted
+     * @throws MojoFailureException   when the application execution fails
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void execute() throws MojoExecutionException, MojoFailureException {

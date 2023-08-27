@@ -1,4 +1,16 @@
+package org.cuspid.generated.repository;
 
+import %s;
+import %s;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+/**
+ * @author Do Quoc Viet
+ * This class is generated from Cuspid Api Generator.
+ * Please keep it in mind that don't modify this class directly.
+ */
+
+@Repository
 public interface Cupid%s extends JpaRepository<%s, %s> {
 }

@@ -3,6 +3,7 @@ package org.cuspid.process;
 import jakarta.persistence.Id;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.cuspid.constant.Template;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -65,17 +66,48 @@ public class GenerateRepository {
         }
     }
 
+    /**
+     * Write repository of the given entity
+     *
+     * @param repositoryDirectory the repository directory
+     * @param clazz               the entity class
+     * @param entityIdClass       the entity id class
+     * @return {@link FileWriter} file writer instance
+     * @throws IOException when writing repository has failed
+     */
     private static FileWriter writeRepository(String repositoryDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(repositoryDirectory + "\\" + clazz.getSimpleName() + "Repository.java");
-        writer.write("package org.cuspid.generated.repository;\n\n");
-        writer.write("import " + clazz.getPackage().getName() + "." + clazz.getSimpleName() + ";\n");
-        writer.write("import org.springframework.data.jpa.repository.JpaRepository;\n");
-        writer.write("import org.springframework.stereotype.Repository;\n");
-        writer.write("import " + entityIdClass.getName() + ";\n\n");
-        writer.write("@Repository\n");
-        writer.write("public interface " + clazz.getSimpleName() + "Repository extends JpaRepository<" + clazz.getSimpleName() + ", " + entityIdClass.getSimpleName() + "> {\n");
-        writer.write("}\n");
+        FileWriter writer = new FileWriter(repositoryDirectory + "\\Cuspid" + clazz.getSimpleName() + "Repository.java");
+        String body = buildRepositoryBody(
+                clazz.getName(),
+                entityIdClass.getName(),
+                clazz.getSimpleName(),
+                entityIdClass.getSimpleName()
+        );
+        writer.write(body);
         return writer;
+    }
+
+    /**
+     * Build body for write method
+     *
+     * @param entityName              the name of the entity
+     * @param entityIdName            the name of the entity identifier
+     * @param entityClassSimpleName   the name of the entity class
+     * @param entityIdClassSimpleName the name of the entity identifier class
+     * @return {@link String} the body
+     */
+    private static String buildRepositoryBody(
+            String entityName,
+            String entityIdName,
+            String entityClassSimpleName,
+            String entityIdClassSimpleName
+    ) {
+        return String.format(Template.REPOSITORY_TEMPLATE,
+                entityName,
+                entityIdName,
+                entityClassSimpleName,
+                entityClassSimpleName,
+                entityIdClassSimpleName);
     }
 
 }

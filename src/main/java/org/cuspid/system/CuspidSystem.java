@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Do Quoc Viet
+ * The cuspid properties
  */
 
 public final class CuspidSystem {

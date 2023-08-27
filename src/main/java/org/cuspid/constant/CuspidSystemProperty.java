@@ -2,6 +2,7 @@ package org.cuspid.constant;
 
 /**
  * @author Do Quoc Viet
+ * The Cuspid properties keys
  */
 
 public enum CuspidSystemProperty {
