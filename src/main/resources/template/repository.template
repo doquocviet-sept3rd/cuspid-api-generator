@@ -1,0 +1,4 @@
+
+
+public interface Cupid%s extends JpaRepository<%s, %s> {
+}
