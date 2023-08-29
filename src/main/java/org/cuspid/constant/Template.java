@@ -137,6 +137,74 @@ public final class Template {
                 """;
 
         SERVICE_IMPL_TEMPLATE = """
+                package org.cupid.generated.service;
+                                
+                import ${entityName};
+                import ${entityIdName};
+                import java.util.List;
+                import java.util.Optional;
+                import org.springframework.stereotype.Service;
+                import org.springframework.beans.factory.annotation.Autowired;
+                import org.cuspid.generated.repository.Cuspid${entityClassSimpleName}Repository;
+                                
+                /**
+                 * @author Do Quoc Viet
+                 * This class is generated from Cuspid Api Generator.
+                 * Please keep it in mind that don't modify this class directly.
+                 */
+                                
+                @Service
+                @SuppressWarnings("unused")
+                public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityClassSimpleName}Service {
+                                
+                    @Autowired
+                    private Cupid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository;
+                                
+                    @Override
+                    public List<${entityClassSimpleName}> getEntities() {
+                        return cuspid${entityClassSimpleName}Repository.findAll();
+                    }
+                    
+                    @Override
+                    public Optional<${entityClassSimpleName}> getEntityById(${entityClassSimpleName} id) {
+                        return cuspid${entityClassSimpleName}Repository.findById(id);
+                    }
+                    
+                    @Override
+                    public ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity) {
+                        return cuspid${entityClassSimpleName}Repository.save(entity);
+                    }
+                    
+                    @Override
+                    public List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities) {
+                        return cuspid${entityClassSimpleName}Repository.saveAll(entities);
+                    }
+                    
+                    @Override
+                    public ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity) {
+                        return cuspid${entityClassSimpleName}Repository.save(entity);
+                    }
+                    
+                    @Override
+                    public List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities) {
+                        return cuspid${entityClassSimpleName}Repository.saveAll(entities);
+                    }
+                    
+                    @Override
+                    public ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id) {
+                        ${entityClassSimpleName} entity = cuspid${entityClassSimpleName}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find entity with id " + id));
+                        cuspid${entityClassSimpleName}Repository.deleteById(id);
+                        return entity;
+                    }
+                    
+                    @Override
+                    public List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids) {
+                        List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAllById(ids);
+                        cuspid${entityClassSimpleName}Repository.deleteAllById(ids);
+                        return entities;
+                    }
+                    
+                }
                 """;
 
         API_TEMPLATE = """

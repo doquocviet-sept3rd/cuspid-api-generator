@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @author Do Quoc Viet
- * The generate service class
+ * The generate service interface class
  */
 public class GenerateServiceInterface {
 

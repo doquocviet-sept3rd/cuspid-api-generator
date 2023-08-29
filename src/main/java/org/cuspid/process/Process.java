@@ -37,5 +37,6 @@ public class Process {
         Set<Class<?>> classes = (Set<Class<?>>) CuspidSystem.getProperty(CuspidSystemProperty.ENTITIES);
         GenerateRepositoryInterface.execute(workingDirectory, classes);
         GenerateServiceInterface.execute(workingDirectory, classes);
+        GenerateServiceImpl.execute(workingDirectory, classes);
     }
 }
