@@ -3,7 +3,6 @@ package org.cuspid;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -40,20 +39,18 @@ public class CodeGenMojo extends AbstractMojo {
      * Executes the application
      *
      * @throws MojoExecutionException when the application execution is interrupted
-     * @throws MojoFailureException   when the application execution fails
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException {
         // Print the project information
-        String content = """
+        System.out.println("""
                 ########################################################################
                 # Thanks for using Cuspid Api Generator.                               #
                 # Please consider donation to help us maintain this project.           #
                 # https://org.cuspid/donate                                            #
                 ########################################################################
-                """;
-        System.out.println(content);
+                """);
 
         // Setting properties
         CuspidSystem.putProperty(CuspidSystemProperty.LOG, getLog());

@@ -16,7 +16,7 @@ import java.util.Set;
  * The generate repository class
  */
 
-public class GenerateRepository {
+public class GenerateRepositoryInterface {
 
     /**
      * Process the generated repository interface
@@ -26,18 +26,18 @@ public class GenerateRepository {
      * @throws MojoExecutionException if there is a problem generating
      */
     public static void execute(String workingDirectory, Set<Class<?>> classes) throws MojoExecutionException {
-        String repositoryDirectory = workingDirectory + "\\repository";
+        String repositoryInterfaceDirectory = workingDirectory + "\\repository";
 
         // Create the repository directory
         try {
-            FileUtils.forceMkdir(new File(repositoryDirectory));
+            FileUtils.forceMkdir(new File(repositoryInterfaceDirectory));
         } catch (IOException ioException) {
             throw new MojoExecutionException("Failed to create repository directory.", ioException);
         }
 
-        // Generate the repository interface
+        // Generate the repositories interface
         for (Class<?> clazz : classes) {
-            generateRepositoryInterface(repositoryDirectory, clazz);
+            generateRepositoryInterface(repositoryInterfaceDirectory, clazz);
         }
 
     }
@@ -45,10 +45,10 @@ public class GenerateRepository {
     /**
      * Generate repository interface method
      *
-     * @param repositoryDirectory the repository directory
+     * @param repositoryInterfaceDirectory the repository directory
      * @param clazz               the class to generate
      */
-    private static void generateRepositoryInterface(String repositoryDirectory, Class<?> clazz) {
+    private static void generateRepositoryInterface(String repositoryInterfaceDirectory, Class<?> clazz) {
         try {
             // Generate the repository interface
             Class<?> entityIdClass = Arrays.stream(clazz.getDeclaredFields())
@@ -58,8 +58,7 @@ public class GenerateRepository {
                     .findFirst()
                     .orElseThrow()
                     .getType();
-
-            FileWriter writer = writeRepository(repositoryDirectory, clazz, entityIdClass);
+            FileWriter writer = writeRepository(repositoryInterfaceDirectory, clazz, entityIdClass);
             writer.close();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
@@ -69,14 +68,14 @@ public class GenerateRepository {
     /**
      * Write repository of the given entity
      *
-     * @param repositoryDirectory the repository directory
+     * @param repositoryInterfaceDirectory the repository directory
      * @param clazz               the entity class
      * @param entityIdClass       the entity id class
      * @return {@link FileWriter} file writer instance
      * @throws IOException when writing repository has failed
      */
-    private static FileWriter writeRepository(String repositoryDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(repositoryDirectory + "\\Cuspid" + clazz.getSimpleName() + "Repository.java");
+    private static FileWriter writeRepository(String repositoryInterfaceDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
+        FileWriter writer = new FileWriter(repositoryInterfaceDirectory + "\\Cuspid" + clazz.getSimpleName() + "Repository.java");
         String body = buildRepositoryBody(
                 clazz.getName(),
                 entityIdClass.getName(),
@@ -102,7 +101,7 @@ public class GenerateRepository {
             String entityClassSimpleName,
             String entityIdClassSimpleName
     ) {
-        return String.format(Template.REPOSITORY_TEMPLATE,
+        return String.format(Template.REPOSITORY_INTERFACE_TEMPLATE,
                 entityName,
                 entityIdName,
                 entityClassSimpleName,

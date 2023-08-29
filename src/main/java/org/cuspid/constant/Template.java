@@ -8,9 +8,9 @@ package org.cuspid.constant;
 public final class Template {
 
     /**
-     * Repository template
+     * Repository interface template
      */
-    public static final String REPOSITORY_TEMPLATE;
+    public static final String REPOSITORY_INTERFACE_TEMPLATE;
 
     /**
      * Service interface template
@@ -33,7 +33,7 @@ public final class Template {
     public static final String CONTROLLER_TEMPLATE;
 
     static {
-        REPOSITORY_TEMPLATE = """
+        REPOSITORY_INTERFACE_TEMPLATE = """
                 package org.cuspid.generated.repository;
                                                     
                 import %s;
@@ -48,11 +48,92 @@ public final class Template {
                  */
                                             
                 @Repository
+                @SuppressWarnings("unused")
                 public interface Cupid%sRepository extends JpaRepository<%s, %s> {
                 }
                 """;
 
         SERVICE_INTERFACE_TEMPLATE = """
+                package org.cupid.generated.service;
+                                
+                import %s;
+                import %s;
+                import java.util.List;
+                import java.util.Optional;
+                                
+                /**
+                 * @author Do Quoc Viet
+                 * This class is generated from Cuspid Api Generator.
+                 * Please keep it in mind that don't modify this class directly.
+                 */
+                                
+                @SuppressWarnings("unused")
+                public interface Cupid%sService {
+                                
+                    /**
+                     * Get entities
+                     *
+                     * @return entities found entities
+                     */
+                    List<%s> getEntities();
+                    
+                    /**
+                     * Get entity by id
+                     *
+                     * @param id entity's id
+                     * @return entity found entity
+                     */
+                    Optional<%s> getEntityById(%s id);
+                     
+                    /**
+                     * Create entity
+                     *
+                     * @param entity entity need to be created
+                     * @return entity created entity
+                     */
+                    %s createEntity(%s entity);
+                     
+                    /**
+                     * Create entities
+                     *
+                     * @param entities entities need to be created
+                     * @return entities created entities
+                     */
+                    List<%s> createEntities(List<%s> entities);
+                     
+                    /**
+                     * Update entity
+                     *
+                     * @param entity entity need to be updated
+                     * @return entity updated entity
+                     */
+                    %s updateEntity(%s entity);
+                     
+                    /**
+                     * Update entities
+                     *
+                     * @param entities entities need to be updated
+                     * @return entities updated entities
+                     */
+                    List<%s> updateEntities(List<%s> entities);
+                     
+                    /**
+                     * Delete entity by id
+                     *
+                     * @param id entity's id need to be deleted
+                     * @return entity deleted entity
+                     */
+                    %s deleteEntityById(%s id);
+                     
+                    /**
+                     * Delete entities by ids
+                     *
+                     * @param ids entities ids need to be deleted
+                     * @return entities deleted entities
+                     */
+                    List<%s> deleteEntitiesByIds(List<%s> ids);
+                                
+                }
                 """;
 
         SERVICE_IMPL_TEMPLATE = """
