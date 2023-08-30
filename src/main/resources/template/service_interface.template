@@ -16,7 +16,7 @@ public interface Cupid${entityClassSimpleName}Service {
     /**
      * Get entities
      *
-     * @return entities found entities
+     * @return found entities
      */
     List<${entityClassSimpleName}> getEntities();
 
@@ -24,7 +24,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Get entity by id
      *
      * @param id entity's id
-     * @return entity found entity
+     * @return found entity
      */
     Optional<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id);
 
@@ -32,7 +32,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Create entity
      *
      * @param entity entity need to be created
-     * @return entity created entity
+     * @return created entity
      */
     ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity);
 
@@ -40,7 +40,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Create entities
      *
      * @param entities entities need to be created
-     * @return entities created entities
+     * @return created entities
      */
     List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities);
 
@@ -48,7 +48,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Update entity
      *
      * @param entity entity need to be updated
-     * @return entity updated entity
+     * @return updated entity
      */
     ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity);
 
@@ -56,7 +56,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Update entities
      *
      * @param entities entities need to be updated
-     * @return entities updated entities
+     * @return updated entities
      */
     List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities);
 
@@ -64,7 +64,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Delete entity by id
      *
      * @param id entity's id need to be deleted
-     * @return entity deleted entity
+     * @return deleted entity
      */
     ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id);
 
@@ -72,7 +72,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * Delete entities by ids
      *
      * @param ids entities ids need to be deleted
-     * @return entities deleted entities
+     * @return deleted entities
      */
     List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids);
 
