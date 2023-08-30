@@ -99,26 +99,11 @@ public class GenerateServiceInterface {
             String entityClassSimpleName,
             String entityIdClassSimpleName
     ) {
-        return String.format(Template.SERVICE_INTERFACE_TEMPLATE,
-                entityName,
-                entityIdName,
-                entityClassSimpleName,
-                entityClassSimpleName,
-                entityClassSimpleName,
-                entityIdClassSimpleName,
-                entityClassSimpleName,
-                entityClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName,
-                entityClassSimpleName,
-                entityClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName,
-                entityIdClassSimpleName
-        );
+        return Template.SERVICE_INTERFACE_TEMPLATE
+                .replaceAll("\\$\\{entityName\\}", entityName)
+                .replaceAll("\\$\\{entityIdName\\}", entityIdName)
+                .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)
+                .replaceAll("\\$\\{entityIdClassSimpleName\\}", entityIdClassSimpleName);
     }
 
 }

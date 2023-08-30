@@ -46,7 +46,7 @@ public class GenerateRepositoryInterface {
      * Generate repository interface method
      *
      * @param repositoryInterfaceDirectory the repository directory
-     * @param clazz               the class to generate
+     * @param clazz                        the class to generate
      */
     private static void generateRepositoryInterface(String repositoryInterfaceDirectory, Class<?> clazz) {
         try {
@@ -69,8 +69,8 @@ public class GenerateRepositoryInterface {
      * Write repository of the given entity
      *
      * @param repositoryInterfaceDirectory the repository directory
-     * @param clazz               the entity class
-     * @param entityIdClass       the entity id class
+     * @param clazz                        the entity class
+     * @param entityIdClass                the entity id class
      * @return {@link FileWriter} file writer instance
      * @throws IOException when writing repository has failed
      */
@@ -101,12 +101,11 @@ public class GenerateRepositoryInterface {
             String entityClassSimpleName,
             String entityIdClassSimpleName
     ) {
-        return String.format(Template.REPOSITORY_INTERFACE_TEMPLATE,
-                entityName,
-                entityIdName,
-                entityClassSimpleName,
-                entityClassSimpleName,
-                entityIdClassSimpleName);
+        return Template.REPOSITORY_INTERFACE_TEMPLATE
+                .replaceAll("\\$\\{entityName\\}", entityName)
+                .replaceAll("\\$\\{entityIdName\\}", entityIdName)
+                .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)
+                .replaceAll("\\$\\{entityIdClassSimpleName\\}", entityIdClassSimpleName);
     }
 
 }

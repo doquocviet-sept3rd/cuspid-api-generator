@@ -36,8 +36,8 @@ public final class Template {
         REPOSITORY_INTERFACE_TEMPLATE = """
                 package org.cuspid.generated.repository;
                                                     
-                import %s;
-                import %s;
+                import ${entityName};
+                import ${entityIdName};
                 import org.springframework.data.jpa.repository.JpaRepository;
                 import org.springframework.stereotype.Repository;
                                             
@@ -48,16 +48,15 @@ public final class Template {
                  */
                                             
                 @Repository
-                @SuppressWarnings("unused")
-                public interface Cupid%sRepository extends JpaRepository<%s, %s> {
+                public interface Cupid${entityClassSimpleName}Repository extends JpaRepository<${entityClassSimpleName}, ${entityIdClassSimpleName}> {
                 }
                 """;
 
         SERVICE_INTERFACE_TEMPLATE = """
                 package org.cupid.generated.service;
                                 
-                import %s;
-                import %s;
+                import ${entityName};
+                import ${entityIdName};
                 import java.util.List;
                 import java.util.Optional;
                                 
@@ -67,15 +66,14 @@ public final class Template {
                  * Please keep it in mind that don't modify this class directly.
                  */
                                 
-                @SuppressWarnings("unused")
-                public interface Cupid%sService {
+                public interface Cupid${entityClassSimpleName}Service {
                                 
                     /**
                      * Get entities
                      *
                      * @return entities found entities
                      */
-                    List<%s> getEntities();
+                    List<${entityClassSimpleName}> getEntities();
                     
                     /**
                      * Get entity by id
@@ -83,7 +81,7 @@ public final class Template {
                      * @param id entity's id
                      * @return entity found entity
                      */
-                    Optional<%s> getEntityById(%s id);
+                    Optional<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id);
                      
                     /**
                      * Create entity
@@ -91,7 +89,7 @@ public final class Template {
                      * @param entity entity need to be created
                      * @return entity created entity
                      */
-                    %s createEntity(%s entity);
+                    ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity);
                      
                     /**
                      * Create entities
@@ -99,7 +97,7 @@ public final class Template {
                      * @param entities entities need to be created
                      * @return entities created entities
                      */
-                    List<%s> createEntities(List<%s> entities);
+                    List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities);
                      
                     /**
                      * Update entity
@@ -107,7 +105,7 @@ public final class Template {
                      * @param entity entity need to be updated
                      * @return entity updated entity
                      */
-                    %s updateEntity(%s entity);
+                    ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity);
                      
                     /**
                      * Update entities
@@ -115,7 +113,7 @@ public final class Template {
                      * @param entities entities need to be updated
                      * @return entities updated entities
                      */
-                    List<%s> updateEntities(List<%s> entities);
+                    List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities);
                      
                     /**
                      * Delete entity by id
@@ -123,7 +121,7 @@ public final class Template {
                      * @param id entity's id need to be deleted
                      * @return entity deleted entity
                      */
-                    %s deleteEntityById(%s id);
+                    ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id);
                      
                     /**
                      * Delete entities by ids
@@ -131,7 +129,7 @@ public final class Template {
                      * @param ids entities ids need to be deleted
                      * @return entities deleted entities
                      */
-                    List<%s> deleteEntitiesByIds(List<%s> ids);
+                    List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids);
                                 
                 }
                 """;
@@ -154,7 +152,6 @@ public final class Template {
                  */
                                 
                 @Service
-                @SuppressWarnings("unused")
                 public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityClassSimpleName}Service {
                                 
                     @Autowired
