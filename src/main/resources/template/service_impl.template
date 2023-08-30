@@ -50,6 +50,16 @@ public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityCl
         return cuspid${entityClassSimpleName}Repository.saveAll(entities);
     }
 
+    @override
+    public boolean existsById(${entityIdClassSimpleName} id) {
+        return cuspid${entityIdClassSimpleName}Repository.existsById(id);
+    }
+
+    @override
+    public long countEntities() {
+        return cuspid${entityClassSimpleName}Repository.count();
+    }
+
     @Override
     public ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id) {
         ${entityClassSimpleName} entity = cuspid${entityClassSimpleName}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find entity with id " + id));
@@ -61,6 +71,25 @@ public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityCl
     public List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids) {
         List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAllById(ids);
         cuspid${entityClassSimpleName}Repository.deleteAllById(ids);
+        return entities;
+    }
+
+    @override
+    List<${entityClassSimpleName}> deleteEntity(${entityClassSimpleName} entity) {
+        cuspid${entityClassSimpleName}Repository.delete(entity);
+        return entity;
+    }
+
+    @override
+    public List<${entityClassSimpleName}> deleteEntities(List<${entityIdClassSimpleName}> entities) {
+        cuspid${entityClassSimpleName}Repository.deleteAll(entities);
+        return entities;
+    }
+
+    @override
+    public List<${entityClassSimpleName}> deleteEntities() {
+        List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAll();
+        cuspid${entityClassSimpleName}Repository.deleteAll();
         return entities;
     }
 

@@ -61,6 +61,20 @@ public interface Cupid${entityClassSimpleName}Service {
     List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities);
 
     /**
+     * Exists entity
+     *
+     * @return the boolean value if the entity is found
+     */
+    boolean existsById(${entityIdClassSimpleName} id);
+
+    /**
+     * Count entities
+     *
+     * @return count of entities
+     */
+    long countEntities();
+
+    /**
      * Delete entity by id
      *
      * @param id entity's id need to be deleted
@@ -75,5 +89,28 @@ public interface Cupid${entityClassSimpleName}Service {
      * @return deleted entities
      */
     List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids);
+
+    /**
+     * Delete entity
+     *
+     * @param entity entity need to be deleted
+     * @return deleted entity
+     */
+    List<${entityClassSimpleName}> deleteEntity(${entityClassSimpleName} entity);
+
+    /**
+     * Delete entities by provided entities
+     *
+     * @param entities entities need to be deleted
+     * @return deleted entities
+     */
+    List<${entityClassSimpleName}> deleteEntities(List<${entityIdClassSimpleName}> entities);
+
+    /**
+     * Delete entities
+     *
+     * @return deleted entities
+     */
+    List<${entityClassSimpleName}> deleteEntities();
 
 }
