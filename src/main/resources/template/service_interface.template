@@ -1,0 +1,79 @@
+package org.cupid.generated.service;
+
+import ${entityName};
+import ${entityIdName};
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * @author Do Quoc Viet
+ * This class is generated from Cuspid Api Generator.
+ * Please keep it in mind that don't modify this class directly.
+ */
+
+public interface Cupid${entityClassSimpleName}Service {
+
+    /**
+     * Get entities
+     *
+     * @return entities found entities
+     */
+    List<${entityClassSimpleName}> getEntities();
+
+    /**
+     * Get entity by id
+     *
+     * @param id entity's id
+     * @return entity found entity
+     */
+    Optional<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id);
+
+    /**
+     * Create entity
+     *
+     * @param entity entity need to be created
+     * @return entity created entity
+     */
+    ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity);
+
+    /**
+     * Create entities
+     *
+     * @param entities entities need to be created
+     * @return entities created entities
+     */
+    List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities);
+
+    /**
+     * Update entity
+     *
+     * @param entity entity need to be updated
+     * @return entity updated entity
+     */
+    ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity);
+
+    /**
+     * Update entities
+     *
+     * @param entities entities need to be updated
+     * @return entities updated entities
+     */
+    List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities);
+
+    /**
+     * Delete entity by id
+     *
+     * @param id entity's id need to be deleted
+     * @return entity deleted entity
+     */
+    ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id);
+
+    /**
+     * Delete entities by ids
+     *
+     * @param ids entities ids need to be deleted
+     * @return entities deleted entities
+     */
+    List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids);
+
+}
