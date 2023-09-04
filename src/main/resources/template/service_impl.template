@@ -1,11 +1,10 @@
-package org.cupid.generated.service;
+package org.cuspid.generated.service.impl;
 
 import ${entityName};
 import ${entityIdName};
+import org.cuspid.generated.service.Cuspid${entityClassSimpleName}Service;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.cuspid.generated.repository.Cuspid${entityClassSimpleName}Repository;
 
 /**
@@ -15,10 +14,13 @@ import org.cuspid.generated.repository.Cuspid${entityClassSimpleName}Repository;
  */
 
 @Service
-public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityClassSimpleName}Service {
+public class Cuspid${entityClassSimpleName}ServiceImpl implements Cuspid${entityClassSimpleName}Service {
 
-    @Autowired
-    private Cupid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository;
+    private final Cuspid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository;
+
+    Cuspid${entityClassSimpleName}ServiceImpl(Cuspid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository) {
+        this.cuspid${entityClassSimpleName}Repository = cuspid${entityClassSimpleName}Repository;
+    }
 
     @Override
     public List<${entityClassSimpleName}> getEntities() {
@@ -26,8 +28,8 @@ public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityCl
     }
 
     @Override
-    public Optional<${entityClassSimpleName}> getEntityById(${entityClassSimpleName} id) {
-        return cuspid${entityClassSimpleName}Repository.findById(id);
+    public ${entityClassSimpleName} getEntityById(${entityIdClassSimpleName} id) {
+        return cuspid${entityClassSimpleName}Repository.findById(id).orElseThrow();
     }
 
     @Override
@@ -50,12 +52,12 @@ public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityCl
         return cuspid${entityClassSimpleName}Repository.saveAll(entities);
     }
 
-    @override
+    @Override
     public boolean existsById(${entityIdClassSimpleName} id) {
-        return cuspid${entityIdClassSimpleName}Repository.existsById(id);
+        return cuspid${entityClassSimpleName}Repository.existsById(id);
     }
 
-    @override
+    @Override
     public long countEntities() {
         return cuspid${entityClassSimpleName}Repository.count();
     }
@@ -74,19 +76,19 @@ public class Cupid${entityClassSimpleName}ServiceImpl implements Cupid${entityCl
         return entities;
     }
 
-    @override
-    List<${entityClassSimpleName}> deleteEntity(${entityClassSimpleName} entity) {
+    @Override
+    public ${entityClassSimpleName} deleteEntity(${entityClassSimpleName} entity) {
         cuspid${entityClassSimpleName}Repository.delete(entity);
         return entity;
     }
 
-    @override
-    public List<${entityClassSimpleName}> deleteEntities(List<${entityIdClassSimpleName}> entities) {
+    @Override
+    public List<${entityClassSimpleName}> deleteEntities(List<${entityClassSimpleName}> entities) {
         cuspid${entityClassSimpleName}Repository.deleteAll(entities);
         return entities;
     }
 
-    @override
+    @Override
     public List<${entityClassSimpleName}> deleteEntities() {
         List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAll();
         cuspid${entityClassSimpleName}Repository.deleteAll();

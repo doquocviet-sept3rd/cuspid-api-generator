@@ -1,9 +1,8 @@
-package org.cupid.generated.service;
+package org.cuspid.generated.service;
 
 import ${entityName};
 import ${entityIdName};
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Do Quoc Viet
@@ -11,7 +10,7 @@ import java.util.Optional;
  * Please keep it in mind that don't modify this class directly.
  */
 
-public interface Cupid${entityClassSimpleName}Service {
+public interface Cuspid${entityClassSimpleName}Service {
 
     /**
      * Get entities
@@ -26,7 +25,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * @param id entity's id
      * @return found entity
      */
-    Optional<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id);
+    ${entityClassSimpleName} getEntityById(${entityIdClassSimpleName} id);
 
     /**
      * Create entity
@@ -96,7 +95,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * @param entity entity need to be deleted
      * @return deleted entity
      */
-    List<${entityClassSimpleName}> deleteEntity(${entityClassSimpleName} entity);
+    ${entityClassSimpleName} deleteEntity(${entityClassSimpleName} entity);
 
     /**
      * Delete entities by provided entities
@@ -104,7 +103,7 @@ public interface Cupid${entityClassSimpleName}Service {
      * @param entities entities need to be deleted
      * @return deleted entities
      */
-    List<${entityClassSimpleName}> deleteEntities(List<${entityIdClassSimpleName}> entities);
+    List<${entityClassSimpleName}> deleteEntities(List<${entityClassSimpleName}> entities);
 
     /**
      * Delete entities

@@ -13,41 +13,42 @@ import java.util.Set;
 
 /**
  * @author Do Quoc Viet
- * The generate api class
+ * The generate controller class
  */
-public class GenerateApi {
+public class GenerateController {
+
     /**
-     * Process the generated api interface
+     * Process the generated controller
      *
      * @param workingDirectory the root directory
      * @param classes          classes to generate
      * @throws MojoExecutionException if there is a problem generating
      */
     public static void execute(String workingDirectory, Set<Class<?>> classes) throws MojoExecutionException {
-        String apiInterfaceDirectory = workingDirectory + "\\api";
+        String controllerDirectory = workingDirectory + "\\api\\impl\\";
 
-        // Create the api directory
+        // Create the controller directory
         try {
-            FileUtils.forceMkdir(new File(apiInterfaceDirectory));
+            FileUtils.forceMkdir(new File(controllerDirectory));
         } catch (IOException ioException) {
-            throw new MojoExecutionException("Failed to create api interface directory.", ioException);
+            throw new MojoExecutionException("Failed to create controller directory.", ioException);
         }
 
-        // Generate the apis interface
+        // Generate the controllers
         for (Class<?> clazz : classes) {
-            generateApiInterface(apiInterfaceDirectory, clazz);
+            generateController(controllerDirectory, clazz);
         }
     }
 
     /**
-     * Generate api interface method
+     * Generate controller method
      *
-     * @param apiInterfaceDirectory the api interface directory
-     * @param clazz                 the class to generate
+     * @param controllerDirectory the controller directory
+     * @param clazz               the class to generate
      */
-    private static void generateApiInterface(String apiInterfaceDirectory, Class<?> clazz) {
+    private static void generateController(String controllerDirectory, Class<?> clazz) {
         try {
-            // Generate the api interface
+            // Generate the controller
             Class<?> entityIdClass = Arrays.stream(clazz.getDeclaredFields())
                     .filter(declaredField -> Arrays
                             .stream(declaredField.getAnnotations())
@@ -55,7 +56,7 @@ public class GenerateApi {
                     .findFirst()
                     .orElseThrow()
                     .getType();
-            FileWriter writer = writeApiInterface(apiInterfaceDirectory, clazz, entityIdClass);
+            FileWriter writer = writeController(controllerDirectory, clazz, entityIdClass);
             writer.close();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
@@ -63,17 +64,17 @@ public class GenerateApi {
     }
 
     /**
-     * Write api interface of the given entity
+     * Write controller of the given entity
      *
-     * @param apiInterfaceDirectory the api interface directory
-     * @param clazz                 the entity class
-     * @param entityIdClass         the entity id class
+     * @param controllerDirectory the service interface directory
+     * @param clazz               the entity class
+     * @param entityIdClass       the entity id class
      * @return {@link FileWriter} file writer instance
      * @throws IOException when writing service interface has failed
      */
-    private static FileWriter writeApiInterface(String apiInterfaceDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(apiInterfaceDirectory + "\\Cuspid" + clazz.getSimpleName() + "Api.java");
-        String body = buildApiInterfaceBody(
+    private static FileWriter writeController(String controllerDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
+        FileWriter writer = new FileWriter(controllerDirectory + "\\Cuspid" + clazz.getSimpleName() + "Controller.java");
+        String body = buildControllerBody(
                 clazz.getName(),
                 entityIdClass.getName(),
                 clazz.getSimpleName(),
@@ -92,16 +93,17 @@ public class GenerateApi {
      * @param entityIdClassSimpleName the name of the entity identifier class
      * @return {@link String} the body
      */
-    private static String buildApiInterfaceBody(
+    private static String buildControllerBody(
             String entityName,
             String entityIdName,
             String entityClassSimpleName,
             String entityIdClassSimpleName
     ) {
-        return Template.API_TEMPLATE
+        return Template.CONTROLLER_TEMPLATE
                 .replaceAll("\\$\\{entityName\\}", entityName)
                 .replaceAll("\\$\\{entityIdName\\}", entityIdName)
                 .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)
                 .replaceAll("\\$\\{entityIdClassSimpleName\\}", entityIdClassSimpleName);
     }
+
 }

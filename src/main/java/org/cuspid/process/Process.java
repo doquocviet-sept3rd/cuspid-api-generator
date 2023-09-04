@@ -25,7 +25,7 @@ public class Process {
         LOGGER.instance().debug("Executing process");
 
         MavenProject mavenProject = (MavenProject) CuspidSystem.getProperty(CuspidSystemProperty.MAVEN_PROJECT);
-        String workingDirectory = mavenProject.getBuild().getOutputDirectory() + "\\org\\cuspid\\generated";
+        String workingDirectory = mavenProject.getBuild().getSourceDirectory() + "\\org\\cuspid\\generated";
 
         // Create the cuspid working directory
         try {
@@ -38,5 +38,7 @@ public class Process {
         GenerateRepositoryInterface.execute(workingDirectory, classes);
         GenerateServiceInterface.execute(workingDirectory, classes);
         GenerateServiceImpl.execute(workingDirectory, classes);
+        GenerateApi.execute(workingDirectory, classes);
+        GenerateController.execute(workingDirectory, classes);
     }
 }
