@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface Cuspid${entityClassSimpleName}Repository extends JpaRepository<${entityClassSimpleName}, ${entityIdClassSimpleName}> {
+public interface ${prefix}${entityClassSimpleName}Repository extends JpaRepository<${entityClassSimpleName}, ${entityIdClassSimpleName}> {
 }

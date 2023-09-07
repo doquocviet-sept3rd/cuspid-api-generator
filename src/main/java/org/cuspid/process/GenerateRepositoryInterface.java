@@ -2,7 +2,9 @@ package org.cuspid.process;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
+import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
 
 import java.io.File;
@@ -67,7 +69,7 @@ public class GenerateRepositoryInterface {
      * @throws IOException when writing repository has failed
      */
     private static FileWriter writeRepository(String repositoryInterfaceDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(repositoryInterfaceDirectory + "\\Cuspid" + clazz.getSimpleName() + "Repository.java");
+        FileWriter writer = new FileWriter(repositoryInterfaceDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Repository.java");
         String body = buildRepositoryBody(
                 clazz.getName(),
                 entityIdClass.getName(),
@@ -94,6 +96,8 @@ public class GenerateRepositoryInterface {
             String entityIdClassSimpleName
     ) {
         return Template.REPOSITORY_INTERFACE_TEMPLATE
+                .replaceAll("\\$\\{prefix\\}", (String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX))
+                .replaceAll("\\$\\{prefix\\.lowercase\\}", GenerateUtil.firstLowerCase((String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX)))
                 .replaceAll("\\$\\{entityName\\}", entityName)
                 .replaceAll("\\$\\{entityIdName\\}", entityIdName)
                 .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)

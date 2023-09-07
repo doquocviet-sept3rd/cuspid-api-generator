@@ -2,10 +2,10 @@ package org.cuspid.generated.service.impl;
 
 import ${entityName};
 import ${entityIdName};
-import org.cuspid.generated.service.Cuspid${entityClassSimpleName}Service;
+import org.cuspid.generated.service.${prefix}${entityClassSimpleName}Service;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import org.cuspid.generated.repository.Cuspid${entityClassSimpleName}Repository;
+import org.cuspid.generated.repository.${prefix}${entityClassSimpleName}Repository;
 
 /**
  * @author Do Quoc Viet
@@ -14,84 +14,84 @@ import org.cuspid.generated.repository.Cuspid${entityClassSimpleName}Repository;
  */
 
 @Service
-public class Cuspid${entityClassSimpleName}ServiceImpl implements Cuspid${entityClassSimpleName}Service {
+public class ${prefix}${entityClassSimpleName}ServiceImpl implements ${prefix}${entityClassSimpleName}Service {
 
-    private final Cuspid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository;
+    private final ${prefix}${entityClassSimpleName}Repository ${prefix.lowercase}${entityClassSimpleName}Repository;
 
-    Cuspid${entityClassSimpleName}ServiceImpl(Cuspid${entityClassSimpleName}Repository cuspid${entityClassSimpleName}Repository) {
-        this.cuspid${entityClassSimpleName}Repository = cuspid${entityClassSimpleName}Repository;
+    ${prefix}${entityClassSimpleName}ServiceImpl(${prefix.lowercase}${entityClassSimpleName}Repository ${prefix.lowercase}${entityClassSimpleName}Repository) {
+        this.${prefix.lowercase}${entityClassSimpleName}Repository = ${prefix.lowercase}${entityClassSimpleName}Repository;
     }
 
     @Override
     public List<${entityClassSimpleName}> getEntities() {
-        return cuspid${entityClassSimpleName}Repository.findAll();
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.findAll();
     }
 
     @Override
     public ${entityClassSimpleName} getEntityById(${entityIdClassSimpleName} id) {
-        return cuspid${entityClassSimpleName}Repository.findById(id).orElseThrow();
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.findById(id).orElseThrow();
     }
 
     @Override
     public ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity) {
-        return cuspid${entityClassSimpleName}Repository.save(entity);
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.save(entity);
     }
 
     @Override
     public List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities) {
-        return cuspid${entityClassSimpleName}Repository.saveAll(entities);
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.saveAll(entities);
     }
 
     @Override
     public ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity) {
-        return cuspid${entityClassSimpleName}Repository.save(entity);
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.save(entity);
     }
 
     @Override
     public List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities) {
-        return cuspid${entityClassSimpleName}Repository.saveAll(entities);
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.saveAll(entities);
     }
 
     @Override
     public boolean existsById(${entityIdClassSimpleName} id) {
-        return cuspid${entityClassSimpleName}Repository.existsById(id);
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.existsById(id);
     }
 
     @Override
     public long countEntities() {
-        return cuspid${entityClassSimpleName}Repository.count();
+        return ${prefix.lowercase}${entityClassSimpleName}Repository.count();
     }
 
     @Override
     public ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id) {
-        ${entityClassSimpleName} entity = cuspid${entityClassSimpleName}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find entity with id " + id));
-        cuspid${entityClassSimpleName}Repository.deleteById(id);
+        ${entityClassSimpleName} entity = ${prefix.lowercase}${entityClassSimpleName}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find entity with id " + id));
+        ${prefix.lowercase}${entityClassSimpleName}Repository.deleteById(id);
         return entity;
     }
 
     @Override
     public List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids) {
-        List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAllById(ids);
-        cuspid${entityClassSimpleName}Repository.deleteAllById(ids);
+        List<${entityClassSimpleName}> entities = ${prefix.lowercase}${entityClassSimpleName}Repository.findAllById(ids);
+        ${prefix.lowercase}${entityClassSimpleName}Repository.deleteAllById(ids);
         return entities;
     }
 
     @Override
     public ${entityClassSimpleName} deleteEntity(${entityClassSimpleName} entity) {
-        cuspid${entityClassSimpleName}Repository.delete(entity);
+        ${prefix.lowercase}${entityClassSimpleName}Repository.delete(entity);
         return entity;
     }
 
     @Override
     public List<${entityClassSimpleName}> deleteEntities(List<${entityClassSimpleName}> entities) {
-        cuspid${entityClassSimpleName}Repository.deleteAll(entities);
+        ${prefix.lowercase}${entityClassSimpleName}Repository.deleteAll(entities);
         return entities;
     }
 
     @Override
     public List<${entityClassSimpleName}> deleteEntities() {
-        List<${entityClassSimpleName}> entities = cuspid${entityClassSimpleName}Repository.findAll();
-        cuspid${entityClassSimpleName}Repository.deleteAll();
+        List<${entityClassSimpleName}> entities = ${prefix.lowercase}${entityClassSimpleName}Repository.findAll();
+        ${prefix.lowercase}${entityClassSimpleName}Repository.deleteAll();
         return entities;
     }
 

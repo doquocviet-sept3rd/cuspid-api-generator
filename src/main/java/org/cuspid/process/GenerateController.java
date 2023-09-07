@@ -2,7 +2,9 @@ package org.cuspid.process;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
+import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
 
 import java.io.File;
@@ -65,7 +67,7 @@ public class GenerateController {
      * @throws IOException when writing service interface has failed
      */
     private static FileWriter writeController(String controllerDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(controllerDirectory + "\\Cuspid" + clazz.getSimpleName() + "Controller.java");
+        FileWriter writer = new FileWriter(controllerDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Controller.java");
         String body = buildControllerBody(
                 clazz.getName(),
                 entityIdClass.getName(),
@@ -92,6 +94,8 @@ public class GenerateController {
             String entityIdClassSimpleName
     ) {
         return Template.CONTROLLER_TEMPLATE
+                .replaceAll("\\$\\{prefix\\}", (String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX))
+                .replaceAll("\\$\\{prefix\\.lowercase\\}", GenerateUtil.firstLowerCase((String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX)))
                 .replaceAll("\\$\\{entityName\\}", entityName)
                 .replaceAll("\\$\\{entityIdName\\}", entityIdName)
                 .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)

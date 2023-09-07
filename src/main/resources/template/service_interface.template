@@ -10,7 +10,7 @@ import java.util.List;
  * Please keep it in mind that don't modify this class directly.
  */
 
-public interface Cuspid${entityClassSimpleName}Service {
+public interface ${prefix}${entityClassSimpleName}Service {
 
     /**
      * Get entities

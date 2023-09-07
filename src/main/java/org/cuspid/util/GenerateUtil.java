@@ -1,5 +1,7 @@
 package org.cuspid.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
 import java.lang.annotation.Annotation;
@@ -46,6 +48,9 @@ public class GenerateUtil {
      * @return the string with lowercase the first character
      */
     public static String firstLowerCase(String string) {
+        if (StringUtils.isBlank(string)) {
+            return StringUtils.EMPTY;
+        }
         return string.substring(0, 1).toLowerCase() + string.substring(1);
     }
 

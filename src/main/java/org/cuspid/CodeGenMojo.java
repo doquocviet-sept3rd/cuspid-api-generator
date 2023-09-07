@@ -32,10 +32,10 @@ public class CodeGenMojo extends AbstractMojo {
 
     @SuppressWarnings("unused")
     @Parameter(defaultValue = "${project}", readonly = true)
-    private MavenProject MAVEN_PROJECT;
+    private MavenProject mavenProject;
 
-    @Parameter(name = "prefix", defaultValue = "Cuspid", readonly = true)
-    private String PREFIX;
+    @Parameter(readonly = true)
+    private String prefix;
 
     /**
      * Executes the application
@@ -56,12 +56,12 @@ public class CodeGenMojo extends AbstractMojo {
 
         // Setting properties
         CuspidSystem.putProperty(CuspidSystemProperty.LOG, getLog());
-        CuspidSystem.putProperty(CuspidSystemProperty.MAVEN_PROJECT, MAVEN_PROJECT);
-        CuspidSystem.putProperty(CuspidSystemProperty.PREFIX, PREFIX);
+        CuspidSystem.putProperty(CuspidSystemProperty.MAVEN_PROJECT, mavenProject);
+        CuspidSystem.putProperty(CuspidSystemProperty.PREFIX, prefix);
 
         try {
             List<URL> projectClassPaths = new ArrayList<>();
-            for (String element : (List<String>) MAVEN_PROJECT.getCompileClasspathElements()) {
+            for (String element : (List<String>) mavenProject.getCompileClasspathElements()) {
                 try {
                     projectClassPaths.add(new File(element).toURI().toURL());
                 } catch (MalformedURLException malformedURLException) {

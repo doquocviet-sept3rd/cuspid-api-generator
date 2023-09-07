@@ -2,8 +2,8 @@ package org.cuspid.generated.api.impl;
 
 import ${entityName};
 import ${entityIdName};
-import org.cuspid.generated.service.Cuspid${entityClassSimpleName}Service;
-import org.cuspid.generated.api.Cuspid${entityClassSimpleName}Api;
+import org.cuspid.generated.service.${prefix}${entityClassSimpleName}Service;
+import org.cuspid.generated.api.${prefix}${entityClassSimpleName}Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,46 +18,46 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/cuspid/api/")
-public class Cuspid${entityClassSimpleName}Controller implements Cuspid${entityClassSimpleName}Api {
+public class ${prefix}${entityClassSimpleName}Controller implements ${prefix}${entityClassSimpleName}Api {
 
-    private final Cuspid${entityClassSimpleName}Service cuspid${entityClassSimpleName}Service;
+    private final ${prefix}${entityClassSimpleName}Service ${prefix.lowercase}${entityClassSimpleName}Service;
 
-    public Cuspid${entityClassSimpleName}Controller(Cuspid${entityClassSimpleName}Service cuspid${entityClassSimpleName}Service) {
-        this.cuspid${entityClassSimpleName}Service = cuspid${entityClassSimpleName}Service;
+    public ${prefix}${entityClassSimpleName}Controller(${prefix}${entityClassSimpleName}Service ${prefix.lowercase}${entityClassSimpleName}Service) {
+        this.${prefix.lowercase}${entityClassSimpleName}Service = ${prefix.lowercase}${entityClassSimpleName}Service;
     }
 
     @Override
     public ResponseEntity<List<${entityClassSimpleName}>> getEntities() {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.getEntities());
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.getEntities());
     }
 
     @Override
     public ResponseEntity<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.getEntityById(id));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.getEntityById(id));
     }
 
     @Override
     public ResponseEntity<${entityClassSimpleName}> createEntity(${entityClassSimpleName} entity) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.createEntity(entity));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.createEntity(entity));
     }
 
     @Override
     public ResponseEntity<List<${entityClassSimpleName}>> createEntities(List<${entityClassSimpleName}> entities) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.createEntities(entities));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.createEntities(entities));
     }
 
     @Override
     public ResponseEntity<${entityClassSimpleName}> updateEntity(${entityClassSimpleName} entity) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.updateEntity(entity));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.updateEntity(entity));
     }
 
     @Override
     public ResponseEntity<List<${entityClassSimpleName}>> updateEntities(List<${entityClassSimpleName}> entities) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.updateEntities(entities));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.updateEntities(entities));
     }
 
     @Override
     public ResponseEntity<${entityClassSimpleName}> deleteEntityById(${entityIdClassSimpleName} id) {
-        return ResponseEntity.ok(cuspid${entityClassSimpleName}Service.deleteEntityById(id));
+        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.deleteEntityById(id));
     }
 }

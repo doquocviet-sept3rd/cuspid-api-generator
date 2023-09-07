@@ -2,7 +2,9 @@ package org.cuspid.process;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
+import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
 
 import java.io.File;
@@ -64,7 +66,7 @@ public class GenerateApi {
      * @throws IOException when writing service interface has failed
      */
     private static FileWriter writeApiInterface(String apiInterfaceDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(apiInterfaceDirectory + "\\Cuspid" + clazz.getSimpleName() + "Api.java");
+        FileWriter writer = new FileWriter(apiInterfaceDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Api.java");
         String body = buildApiInterfaceBody(
                 clazz.getName(),
                 entityIdClass.getName(),
@@ -91,6 +93,8 @@ public class GenerateApi {
             String entityIdClassSimpleName
     ) {
         return Template.API_TEMPLATE
+                .replaceAll("\\$\\{prefix\\}", (String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX))
+                .replaceAll("\\$\\{prefix\\.lowercase\\}", GenerateUtil.firstLowerCase((String) CuspidSystem.getProperty(CuspidSystemProperty.PREFIX)))
                 .replaceAll("\\$\\{entityName\\}", entityName)
                 .replaceAll("\\$\\{entityIdName\\}", entityIdName)
                 .replaceAll("\\$\\{entityClassSimpleName\\}", entityClassSimpleName)
