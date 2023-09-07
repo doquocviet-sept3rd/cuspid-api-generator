@@ -1,14 +1,13 @@
 package org.cuspid.process;
 
-import jakarta.persistence.Id;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.cuspid.constant.Template;
+import org.cuspid.util.GenerateUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -49,14 +48,7 @@ public class GenerateController {
     private static void generateController(String controllerDirectory, Class<?> clazz) {
         try {
             // Generate the controller
-            Class<?> entityIdClass = Arrays.stream(clazz.getDeclaredFields())
-                    .filter(declaredField -> Arrays
-                            .stream(declaredField.getAnnotations())
-                            .anyMatch(annotation -> annotation.annotationType().getTypeName().equals(Id.class.getTypeName())))
-                    .findFirst()
-                    .orElseThrow()
-                    .getType();
-            FileWriter writer = writeController(controllerDirectory, clazz, entityIdClass);
+            FileWriter writer = writeController(controllerDirectory, clazz, GenerateUtil.findIdClass(clazz));
             writer.close();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);

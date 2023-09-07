@@ -1,14 +1,13 @@
 package org.cuspid.process;
 
-import jakarta.persistence.Id;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.cuspid.constant.Template;
+import org.cuspid.util.GenerateUtil;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -49,14 +48,7 @@ public class GenerateServiceInterface {
     private static void generateServiceInterface(String serviceInterfaceDirectory, Class<?> clazz) {
         try {
             // Generate the service interface
-            Class<?> entityIdClass = Arrays.stream(clazz.getDeclaredFields())
-                    .filter(declaredField -> Arrays
-                            .stream(declaredField.getAnnotations())
-                            .anyMatch(annotation -> annotation.annotationType().getTypeName().equals(Id.class.getTypeName())))
-                    .findFirst()
-                    .orElseThrow()
-                    .getType();
-            FileWriter writer = writeServiceInterface(serviceInterfaceDirectory, clazz, entityIdClass);
+            FileWriter writer = writeServiceInterface(serviceInterfaceDirectory, clazz, GenerateUtil.findIdClass(clazz));
             writer.close();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);

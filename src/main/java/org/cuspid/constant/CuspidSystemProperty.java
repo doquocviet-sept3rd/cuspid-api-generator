@@ -8,7 +8,8 @@ package org.cuspid.constant;
 public enum CuspidSystemProperty {
     LOG("The Log property of the maven project"),
     ENTITIES("The Entities property of the maven project"),
-    MAVEN_PROJECT("The Maven Project property");
+    MAVEN_PROJECT("The Maven Project property"),
+    PREFIX("The Prefix property of the project's classes");
 
     private final String description;
 

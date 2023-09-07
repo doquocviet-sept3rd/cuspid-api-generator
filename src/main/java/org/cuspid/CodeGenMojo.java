@@ -8,19 +8,18 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.cuspid.annotation.CuspidApi;
 import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.process.Process;
 import org.cuspid.system.CuspidSystem;
 import org.reflections.Reflections;
 
+import javax.persistence.Entity;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Do Quoc Viet
@@ -32,8 +31,11 @@ import java.util.Set;
 public class CodeGenMojo extends AbstractMojo {
 
     @SuppressWarnings("unused")
-    @Parameter(defaultValue = "${project}")
-    private MavenProject mavenProject;
+    @Parameter(defaultValue = "${project}", readonly = true)
+    private MavenProject MAVEN_PROJECT;
+
+    @Parameter(name = "prefix", defaultValue = "Cuspid", readonly = true)
+    private String PREFIX;
 
     /**
      * Executes the application
@@ -47,18 +49,19 @@ public class CodeGenMojo extends AbstractMojo {
         System.out.println("""
                 ########################################################################
                 # Thanks for using Cuspid Api Generator.                               #
-                # Please consider donation to help us maintain this project.           #
+                # Please consider donation to help us maintain this project.😊         #
                 # https://org.cuspid/donate                                            #
                 ########################################################################
                 """);
 
         // Setting properties
         CuspidSystem.putProperty(CuspidSystemProperty.LOG, getLog());
-        CuspidSystem.putProperty(CuspidSystemProperty.MAVEN_PROJECT, mavenProject);
+        CuspidSystem.putProperty(CuspidSystemProperty.MAVEN_PROJECT, MAVEN_PROJECT);
+        CuspidSystem.putProperty(CuspidSystemProperty.PREFIX, PREFIX);
 
         try {
             List<URL> projectClassPaths = new ArrayList<>();
-            for (String element : (List<String>) mavenProject.getCompileClasspathElements()) {
+            for (String element : (List<String>) MAVEN_PROJECT.getCompileClasspathElements()) {
                 try {
                     projectClassPaths.add(new File(element).toURI().toURL());
                 } catch (MalformedURLException malformedURLException) {
@@ -66,8 +69,7 @@ public class CodeGenMojo extends AbstractMojo {
                 }
             }
             Reflections reflections = new Reflections(new URLClassLoader(projectClassPaths.toArray(new URL[0])));
-            Set<Class<?>> entities = reflections.getTypesAnnotatedWith(CuspidApi.class);
-            CuspidSystem.putProperty(CuspidSystemProperty.ENTITIES, entities);
+            CuspidSystem.putProperty(CuspidSystemProperty.ENTITIES, reflections.getTypesAnnotatedWith(Entity.class));
         } catch (DependencyResolutionRequiredException e) {
             throw new MojoExecutionException("Dependency resolution failed.", e);
         }
