@@ -6,6 +6,7 @@ import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
 import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
+import org.cuspid.util.LOGGER;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -66,7 +67,9 @@ public class GenerateApi {
      * @throws IOException when writing service interface has failed
      */
     private static FileWriter writeApiInterface(String apiInterfaceDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(apiInterfaceDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Api.java");
+        String fileName = apiInterfaceDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Api.java";
+        LOGGER.instance().debug("Writing " + fileName);
+        FileWriter writer = new FileWriter(fileName);
         String body = buildApiInterfaceBody(
                 clazz.getName(),
                 entityIdClass.getName(),

@@ -6,6 +6,7 @@ import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
 import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
+import org.cuspid.util.LOGGER;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -67,7 +68,9 @@ public class GenerateController {
      * @throws IOException when writing service interface has failed
      */
     private static FileWriter writeController(String controllerDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(controllerDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Controller.java");
+        String fileName = controllerDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "Controller.java";
+        LOGGER.instance().debug("Writing " + fileName);
+        FileWriter writer = new FileWriter(fileName);
         String body = buildControllerBody(
                 clazz.getName(),
                 entityIdClass.getName(),

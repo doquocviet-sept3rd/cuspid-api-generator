@@ -6,6 +6,7 @@ import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.constant.Template;
 import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.GenerateUtil;
+import org.cuspid.util.LOGGER;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -67,7 +68,9 @@ public class GenerateServiceImpl {
      * @throws IOException when writing service impl has failed
      */
     private static FileWriter writeServiceImpl(String serviceImplDirectory, Class<?> clazz, Class<?> entityIdClass) throws IOException {
-        FileWriter writer = new FileWriter(serviceImplDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "ServiceImpl.java");
+        String fileName = serviceImplDirectory + "\\" + CuspidSystem.getProperty(CuspidSystemProperty.PREFIX) + clazz.getSimpleName() + "ServiceImpl.java";
+        LOGGER.instance().debug("Writing " + fileName);
+        FileWriter writer = new FileWriter(fileName);
         String body = buildServiceImplBody(
                 clazz.getName(),
                 entityIdClass.getName(),
