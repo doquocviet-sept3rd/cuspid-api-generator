@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppTranslateModule } from './app.translate';
+import { SharedModule } from './shared/shared.module';
+import { DetailEntityComponent } from './component/detail-entity.component';
 
 /**
  * @author Do Quoc Viet
@@ -11,12 +13,14 @@ import { AppTranslateModule } from './app.translate';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DetailEntityComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AppTranslateModule
+    AppTranslateModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
