@@ -1,5 +1,9 @@
 package org.cuspid.constant;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -7,58 +11,39 @@ import java.util.Objects;
 
 /**
  * @author Do Quoc Viet
- * The template for the generation
+ * Template for the generation
  */
 
-public final class Template {
-
-    /**
-     * Repository interface template
-     */
-    public static final String REPOSITORY_INTERFACE_TEMPLATE;
-
-    /**
-     * Service interface template
-     */
-    public static final String SERVICE_INTERFACE_TEMPLATE;
-
-    /**
-     * Service implementation template
-     */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Template {
+    public static final String REPOSITORY_TEMPLATE;
+    public static final String SERVICE_TEMPLATE;
     public static final String SERVICE_IMPL_TEMPLATE;
-
-    /**
-     * Api template
-     */
-    public static final String API_TEMPLATE;
-
-    /**
-     * Controller template
-     */
     public static final String CONTROLLER_TEMPLATE;
 
     static {
-        REPOSITORY_INTERFACE_TEMPLATE = getTemplate("repository_interface.template");
-        SERVICE_INTERFACE_TEMPLATE = getTemplate("service_interface.template");
-        SERVICE_IMPL_TEMPLATE = getTemplate("service_impl.template");
-        API_TEMPLATE = getTemplate("api.template");
-        CONTROLLER_TEMPLATE = getTemplate("controller.template");
-    }
-
-    /**
-     * Get the template
-     *
-     * @param filename the filename
-     * @return the template
-     */
-    static String getTemplate(String filename) {
-        try (InputStream in = Objects.requireNonNull(Template.class.getResource("/template/" + filename)).openStream()) {
-            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        try {
+            REPOSITORY_TEMPLATE = getTemplate("repository.template");
+            SERVICE_TEMPLATE = getTemplate("service.template");
+            SERVICE_IMPL_TEMPLATE = getTemplate("service_impl.template");
+            CONTROLLER_TEMPLATE = getTemplate("controller.template");
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
-    private Template() {
+    /**
+     * Get template
+     *
+     * @param filename filename
+     * @return template
+     */
+    static String getTemplate(String filename) throws FileNotFoundException {
+        try (InputStream in = Objects.requireNonNull(Template.class.getResource("/template/" + filename)).openStream()) {
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new FileNotFoundException(String.format("Could not read template file %s", filename));
+        }
     }
+
 }

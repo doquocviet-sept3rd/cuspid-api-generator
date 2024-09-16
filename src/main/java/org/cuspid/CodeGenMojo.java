@@ -1,5 +1,7 @@
 package org.cuspid;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -9,17 +11,20 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.cuspid.constant.CuspidSystemProperty;
-import org.cuspid.process.Process;
+import org.cuspid.processor.Processor;
 import org.cuspid.system.CuspidSystem;
 import org.reflections.Reflections;
 
 import javax.persistence.Entity;
 import java.io.File;
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+
+import static org.cuspid.constant.CuspidSystemProperty.MAVEN_PROJECT;
+import static org.cuspid.constant.CuspidSystemProperty.PREFIX;
 
 /**
  * @author Do Quoc Viet
@@ -27,6 +32,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("unused")
+@Slf4j
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.COMPILE, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class CodeGenMojo extends AbstractMojo {
 
@@ -37,16 +43,11 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(readonly = true)
     private String prefix;
 
-    /**
-     * Executes the application
-     *
-     * @throws MojoExecutionException when the application execution is interrupted
-     */
     @Override
+    @SneakyThrows
     @SuppressWarnings("unchecked")
-    public void execute() throws MojoExecutionException {
-        // Print the project information
-        System.out.println("""
+    public void execute() {
+        log.info("""
                 ########################################################################
                 # Thanks for using Cuspid Api Generator.                               #
                 # Please consider donation to help us maintain this project.😊         #
@@ -55,26 +56,24 @@ public class CodeGenMojo extends AbstractMojo {
                 """);
 
         // Setting properties
-        CuspidSystem.putProperty(CuspidSystemProperty.LOG, getLog());
-        CuspidSystem.putProperty(CuspidSystemProperty.MAVEN_PROJECT, mavenProject);
-        CuspidSystem.putProperty(CuspidSystemProperty.PREFIX, prefix);
+        CuspidSystem.put(MAVEN_PROJECT, mavenProject);
+        CuspidSystem.put(PREFIX, prefix);
 
         try {
-            List<URL> projectClassPaths = new ArrayList<>();
-            for (String element : (List<String>) mavenProject.getCompileClasspathElements()) {
-                try {
-                    projectClassPaths.add(new File(element).toURI().toURL());
-                } catch (MalformedURLException malformedURLException) {
-                    throw new MojoExecutionException(element + " is an invalid classpath element.", malformedURLException);
-                }
-            }
-            Reflections reflections = new Reflections(new URLClassLoader(projectClassPaths.toArray(new URL[0])));
-            CuspidSystem.putProperty(CuspidSystemProperty.ENTITIES, reflections.getTypesAnnotatedWith(Entity.class));
+            final Function<URI, URL> uriToUrl = URI::toURL;
+            URL[] classPaths = ((List<String>) mavenProject.getCompileClasspathElements())
+                    .stream()
+                    .map(File::new)
+                    .map(File::toURI)
+                    .map(uriToUrl)
+                    .toArray(URL[]::new);
+            Reflections reflections = new Reflections(new URLClassLoader(classPaths));
+            CuspidSystem.put(CuspidSystemProperty.ENTITIES, reflections.getTypesAnnotatedWith(Entity.class));
         } catch (DependencyResolutionRequiredException e) {
             throw new MojoExecutionException("Dependency resolution failed.", e);
         }
 
         // Execute process
-        Process.execute();
+        Processor.execute();
     }
 }

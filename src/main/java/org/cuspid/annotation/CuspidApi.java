@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author Do Quoc Viet
- * The Cuspid Api annotation
+ * Cuspid Api annotation
  */
 
 @Target(ElementType.TYPE)
