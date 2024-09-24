@@ -1,10 +1,14 @@
-package org.cuspid.generated.api.impl;
+package org.cuspid.generated.controller;
 
 import ${entityName};
 import ${entityIdName};
 import org.cuspid.generated.service.${prefix}${entityClassSimpleName}Service;
-import org.cuspid.generated.api.${prefix}${entityClassSimpleName}Api;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,51 +17,36 @@ import java.util.List;
 /**
  * @author Do Quoc Viet
  * This class is generated from Cuspid Api Generator.
- * Please keep it in mind that don't modify this class directly.
+ * Please keep in mind that should not be edited directly.
  */
 
 @RestController
-@RequestMapping(path = "/cuspid/api/")
-public class ${prefix}${entityClassSimpleName}Controller implements ${prefix}${entityClassSimpleName}Api {
+@RequestMapping(path = "/cuspid/api/${entityClassSimpleName.toFirstLowerCase()}")
+public class ${prefix}${entityClassSimpleName}Controller {
 
-    private final ${prefix}${entityClassSimpleName}Service ${prefix.lowercase}${entityClassSimpleName}Service;
+    private final ${prefix}${entityClassSimpleName}Service ${prefix.toFirstLowerCase()}${entityClassSimpleName}Service;
 
-    public ${prefix}${entityClassSimpleName}Controller(${prefix}${entityClassSimpleName}Service ${prefix.lowercase}${entityClassSimpleName}Service) {
-        this.${prefix.lowercase}${entityClassSimpleName}Service = ${prefix.lowercase}${entityClassSimpleName}Service;
+    public ${prefix}${entityClassSimpleName}Controller(${prefix}${entityClassSimpleName}Service ${prefix.toFirstLowerCase()}${entityClassSimpleName}Service) {
+        this.${prefix.toFirstLowerCase()}${entityClassSimpleName}Service = ${prefix.toFirstLowerCase()}${entityClassSimpleName}Service;
     }
 
-    @Override
-    public ResponseEntity<List<${entityClassSimpleName}>> getEntities() {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.getEntities());
+    @GetMapping
+    public ResponseEntity<List<${entityClassSimpleName}>> get() {
+        return ResponseEntity.ok(${prefix.toFirstLowerCase()}${entityClassSimpleName}Service.get());
     }
 
-    @Override
-    public ResponseEntity<${entityClassSimpleName}> getEntityById(${entityIdClassSimpleName} id) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.getEntityById(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<${entityClassSimpleName}> get(@PathVariable ${entityIdClassSimpleName} id) {
+        return ResponseEntity.ok(${prefix.toFirstLowerCase()}${entityClassSimpleName}Service.get(id));
     }
 
-    @Override
-    public ResponseEntity<${entityClassSimpleName}> createEntity(${entityClassSimpleName} entity) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.createEntity(entity));
+    @PostMapping
+    public ResponseEntity<${entityClassSimpleName}> upsert(@RequestBody ${entityClassSimpleName} ${entityClassSimpleName.toFirstLowerCase()}) {
+        return ResponseEntity.ok(${prefix.toFirstLowerCase()}${entityClassSimpleName}Service.upsert(${entityClassSimpleName.toFirstLowerCase()}));
     }
 
-    @Override
-    public ResponseEntity<List<${entityClassSimpleName}>> createEntities(List<${entityClassSimpleName}> entities) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.createEntities(entities));
-    }
-
-    @Override
-    public ResponseEntity<${entityClassSimpleName}> updateEntity(${entityClassSimpleName} entity) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.updateEntity(entity));
-    }
-
-    @Override
-    public ResponseEntity<List<${entityClassSimpleName}>> updateEntities(List<${entityClassSimpleName}> entities) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.updateEntities(entities));
-    }
-
-    @Override
-    public ResponseEntity<${entityClassSimpleName}> deleteEntityById(${entityIdClassSimpleName} id) {
-        return ResponseEntity.ok(${prefix.lowercase}${entityClassSimpleName}Service.deleteEntityById(id));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<${entityClassSimpleName}> delete(@PathVariable ${entityIdClassSimpleName} id) {
+        return ResponseEntity.ok(${prefix.toFirstLowerCase()}${entityClassSimpleName}Service.delete(id));
     }
 }

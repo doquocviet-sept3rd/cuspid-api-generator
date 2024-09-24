@@ -45,9 +45,9 @@ public class ControllerProcessor {
                 String prefix = (String) CuspidSystem.get(CuspidSystemProperty.PREFIX);
                 Map<String, String> projections = Generators.getProjections(clazz);
                 final String filename = String.format("%s\\%sController.java", controllerDir, prefix + clazz.getSimpleName());
-                final FileWriter writer = new FileWriter(filename);
-                writer.write(Strings.substitute(CONTROLLER_TEMPLATE, projections));
-                writer.close();
+                try (final FileWriter writer = new FileWriter(filename)) {
+                    writer.write(Strings.substitute(CONTROLLER_TEMPLATE, projections));
+                }
             }
         } catch (IOException ioException) {
             throw new MojoExecutionException("Failed to create controller directory.", ioException);

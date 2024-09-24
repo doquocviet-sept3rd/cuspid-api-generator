@@ -7,109 +7,17 @@ import java.util.List;
 /**
  * @author Do Quoc Viet
  * This class is generated from Cuspid Api Generator.
- * Please keep it in mind that don't modify this class directly.
+ * Please keep in mind that should not be edited directly.
  */
 
 public interface ${prefix}${entityClassSimpleName}Service {
 
-    /**
-     * Get entities
-     *
-     * @return found entities
-     */
-    List<${entityClassSimpleName}> getEntities();
+    List<${entityClassSimpleName}> get();
 
-    /**
-     * Get entity by id
-     *
-     * @param id entity's id
-     * @return found entity
-     */
-    ${entityClassSimpleName} getEntityById(${entityIdClassSimpleName} id);
+    ${entityClassSimpleName} get(${entityIdClassSimpleName} id);
 
-    /**
-     * Create entity
-     *
-     * @param entity entity need to be created
-     * @return created entity
-     */
-    ${entityClassSimpleName} createEntity(${entityClassSimpleName} entity);
+    ${entityClassSimpleName} upsert(${entityClassSimpleName} ${entityClassSimpleName.toFirstLowerCase()});
 
-    /**
-     * Create entities
-     *
-     * @param entities entities need to be created
-     * @return created entities
-     */
-    List<${entityClassSimpleName}> createEntities(List<${entityClassSimpleName}> entities);
-
-    /**
-     * Update entity
-     *
-     * @param entity entity need to be updated
-     * @return updated entity
-     */
-    ${entityClassSimpleName} updateEntity(${entityClassSimpleName} entity);
-
-    /**
-     * Update entities
-     *
-     * @param entities entities need to be updated
-     * @return updated entities
-     */
-    List<${entityClassSimpleName}> updateEntities(List<${entityClassSimpleName}> entities);
-
-    /**
-     * Exists entity
-     *
-     * @return the boolean value if the entity is found
-     */
-    boolean existsById(${entityIdClassSimpleName} id);
-
-    /**
-     * Count entities
-     *
-     * @return count of entities
-     */
-    long countEntities();
-
-    /**
-     * Delete entity by id
-     *
-     * @param id entity's id need to be deleted
-     * @return deleted entity
-     */
-    ${entityClassSimpleName} deleteEntityById(${entityIdClassSimpleName} id);
-
-    /**
-     * Delete entities by ids
-     *
-     * @param ids entities ids need to be deleted
-     * @return deleted entities
-     */
-    List<${entityClassSimpleName}> deleteEntitiesByIds(List<${entityIdClassSimpleName}> ids);
-
-    /**
-     * Delete entity
-     *
-     * @param entity entity need to be deleted
-     * @return deleted entity
-     */
-    ${entityClassSimpleName} deleteEntity(${entityClassSimpleName} entity);
-
-    /**
-     * Delete entities by provided entities
-     *
-     * @param entities entities need to be deleted
-     * @return deleted entities
-     */
-    List<${entityClassSimpleName}> deleteEntities(List<${entityClassSimpleName}> entities);
-
-    /**
-     * Delete entities
-     *
-     * @return deleted entities
-     */
-    List<${entityClassSimpleName}> deleteEntities();
+    ${entityClassSimpleName} delete(${entityIdClassSimpleName} id);
 
 }

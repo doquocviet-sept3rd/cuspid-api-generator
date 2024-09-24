@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * @author Do Quoc Viet
  * This class is generated from Cuspid Api Generator.
- * Please keep it in mind that don't modify this class directly.
+ * Please keep in mind that should not be edited directly.
  */
 
 @Repository

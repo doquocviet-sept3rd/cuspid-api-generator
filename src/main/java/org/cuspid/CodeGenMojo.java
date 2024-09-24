@@ -1,5 +1,6 @@
 package org.cuspid;
 
+import jakarta.persistence.Entity;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -15,12 +16,13 @@ import org.cuspid.processor.Processor;
 import org.cuspid.system.CuspidSystem;
 import org.reflections.Reflections;
 
-import javax.persistence.Entity;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 import static org.cuspid.constant.CuspidSystemProperty.MAVEN_PROJECT;
@@ -60,12 +62,20 @@ public class CodeGenMojo extends AbstractMojo {
         CuspidSystem.put(PREFIX, prefix);
 
         try {
-            final Function<URI, URL> uriToUrl = URI::toURL;
+            final Function<URI, URL> uriToUrl = uri -> {
+                try {
+                    return uri.toURL();
+                } catch (MalformedURLException ignored) {
+                    // do nothing
+                }
+                return null;
+            };
             URL[] classPaths = ((List<String>) mavenProject.getCompileClasspathElements())
                     .stream()
                     .map(File::new)
                     .map(File::toURI)
                     .map(uriToUrl)
+                    .filter(Objects::nonNull)
                     .toArray(URL[]::new);
             Reflections reflections = new Reflections(new URLClassLoader(classPaths));
             CuspidSystem.put(CuspidSystemProperty.ENTITIES, reflections.getTypesAnnotatedWith(Entity.class));

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
+import static org.cuspid.constant.Template.CONTROLLER_TEMPLATE;
 import static org.cuspid.constant.Template.REPOSITORY_TEMPLATE;
 
 /**
@@ -45,9 +46,9 @@ public class RepositoryProcessor {
                 String prefix = (String) CuspidSystem.get(CuspidSystemProperty.PREFIX);
                 Map<String, String> projections = Generators.getProjections(clazz);
                 final String filename = String.format("%s\\%sRepository.java", repositoryDir, prefix + clazz.getSimpleName());
-                final FileWriter writer = new FileWriter(filename);
-                writer.write(Strings.substitute(REPOSITORY_TEMPLATE, projections));
-                writer.close();
+                try (final FileWriter writer = new FileWriter(filename)) {
+                    writer.write(Strings.substitute(REPOSITORY_TEMPLATE, projections));
+                }
             }
         } catch (IOException ioException) {
             throw new MojoExecutionException("Failed to create service interface directory.", ioException);

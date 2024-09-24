@@ -50,14 +50,14 @@ public class ServiceProcessor {
                 Map<String, String> projections = Generators.getProjections(clazz);
 
                 final String serviceFilename = String.format("%s\\%sService.java", serviceDir, prefix + clazz.getSimpleName());
-                final FileWriter serviceWriter = new FileWriter(serviceFilename);
-                serviceWriter.write(Strings.substitute(SERVICE_TEMPLATE, projections));
-                serviceWriter.close();
+                try (final FileWriter serviceWriter = new FileWriter(serviceFilename)) {
+                    serviceWriter.write(Strings.substitute(SERVICE_TEMPLATE, projections));
+                }
 
                 final String serviceImplFilename = String.format("%s\\%sServiceImpl.java", serviceImplDir, prefix + clazz.getSimpleName());
-                final FileWriter serviceImplWriter = new FileWriter(serviceImplFilename);
-                serviceImplWriter.write(Strings.substitute(SERVICE_IMPL_TEMPLATE, projections));
-                serviceImplWriter.close();
+                try (final FileWriter serviceImplWriter = new FileWriter(serviceImplFilename)) {
+                    serviceImplWriter.write(Strings.substitute(SERVICE_IMPL_TEMPLATE, projections));
+                }
             }
         } catch (IOException ioException) {
             throw new MojoExecutionException("Failed to create service interface directory.", ioException);
