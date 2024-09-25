@@ -1,0 +1,66 @@
+package org.cuspid.generated.controller;
+
+import {{ entity.fullName }};
+import {{ entity.id.fullName }};
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.cuspid.generated.service.{{ prefix }}{{ entity.name }}Service;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * @author Do Quoc Viet
+ * This class is generated from Cuspid Api Generator.
+ * Please keep in mind that should not be edited directly.
+ */
+
+@RestController
+@RequestMapping(path = "/cuspid/api/{{ entity.name.firstLowercase }}")
+@Tag(name = "{{ entity.name }}", description = "Operations related to {{ entity.name.firstLowercase }} management")
+public class {{ prefix }}{{ entity.name }}Controller {
+
+    private final {{ prefix }}{{ entity.name }}Service {{ prefix.firstLowercase }}{{ entity.name }}Service;
+
+    public {{ prefix }}{{ entity.name }}Controller({{ prefix }}{{ entity.name }}Service {{ prefix.firstLowercase }}{{ entity.name }}Service) {
+        this.{{ prefix.firstLowercase }}{{ entity.name }}Service = {{ prefix.firstLowercase }}{{ entity.name }}Service;
+    }
+
+    @GetMapping
+    @Operation(summary = "Get {{ entity.name.firstLowercase }}(s)", description = "Returns a list of all {{ entity.name.firstLowercase }}(s) available in the system.")
+    public ResponseEntity<List<{{ entity.name }}>> get() {
+        return ResponseEntity.ok({{ prefix.firstLowercase }}{{ entity.name }}Service.get());
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get a {{ entity.name.firstLowercase }} by it's id", description = "Returns a {{ entity.name.firstLowercase }} with specified id.")
+    public ResponseEntity<{{ entity.name }}> get(
+        @Parameter(description = "id of {{ entity.name.firstLowercase }}", required = true)
+        @PathVariable {{ entity.id.name }} id) {
+        return ResponseEntity.ok({{ prefix.firstLowercase }}{{ entity.name }}Service.get(id));
+    }
+
+    @PostMapping
+    @Operation(summary = "Upsert a {{ entity.name.firstLowercase }}", description = "Returns a {{ entity.name.firstLowercase }} was inserted or updated.")
+    public ResponseEntity<{{ entity.name }}> upsert(
+        @Parameter(description = "{{ entity.name.firstLowercase }} need to be inserted or updated", required = true)
+        @RequestBody {{ entity.name }} {{ entity.name.firstLowercase }}) {
+        return ResponseEntity.ok({{ prefix.firstLowercase }}{{ entity.name }}Service.upsert({{ entity.name.firstLowercase }}));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a {{ entity.name.firstLowercase }}", description = "Returns a {{ entity.name.firstLowercase }} was deleted.")
+    public ResponseEntity<{{ entity.name }}> delete(
+        @Parameter(description = "{{ entity.name.firstLowercase }} need to be deleted", required = true)
+        @PathVariable {{ entity.id.name }} id) {
+        return ResponseEntity.ok({{ prefix.firstLowercase }}{{ entity.name }}Service.delete(id));
+    }
+}

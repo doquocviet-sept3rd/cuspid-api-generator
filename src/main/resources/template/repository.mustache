@@ -1,7 +1,7 @@
 package org.cuspid.generated.repository;
 
-import ${entityName};
-import ${entityIdName};
+import {{ entity.fullName }};
+import {{ entity.id.fullName }};
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ${prefix}${entityClassSimpleName}Repository extends JpaRepository<${entityClassSimpleName}, ${entityIdClassSimpleName}> {
+public interface {{ prefix }}{{ entity.name }}Repository extends JpaRepository<{{ entity.name }}, {{ entity.id.name }}> {
 }

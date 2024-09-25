@@ -4,7 +4,8 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.cuspid.constant.CuspidSystemProperty;
+import org.cuspid.domain.MustacheClass;
+import org.cuspid.domain.MustacheString;
 import org.cuspid.system.CuspidSystem;
 
 import java.lang.annotation.Annotation;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.cuspid.util.Strings.firstLowerCase;
+import static org.cuspid.constant.CuspidSystemProperty.PREFIX;
 
 /**
  * @author Do Quoc Viet
@@ -29,7 +30,7 @@ public class Generators {
      * @param clazz the class to find the id class
      * @return the id class of the provided class
      */
-    public static Class<?> findIdClass(Class<?> clazz) {
+    public static Class<?> findClazzId(Class<?> clazz) {
         Predicate<Annotation> predicate = annotation ->
                 // @formatter:off
                 annotation.annotationType().getTypeName().equals(Id.class.getTypeName())
@@ -50,22 +51,10 @@ public class Generators {
      * @param clazz class metadata to be injected
      * @return projections
      */
-    public static Map<String, String> getProjections(Class<?> clazz) {
-        Class<?> entityIdClass = Generators.findIdClass(clazz);
-        String prefix = (String) CuspidSystem.get(CuspidSystemProperty.PREFIX);
-        Map<String, String> projections = new HashMap<>();
-        projections.put("prefix", prefix);
-        projections.put("entityName", clazz.getName());
-        projections.put("entityIdName", entityIdClass.getName());
-        projections.put("entityClassSimpleName", clazz.getSimpleName());
-        projections.put("entityIdClassSimpleName", entityIdClass.getSimpleName());
-        Map<String, String> transformedProjections = new HashMap<>();
-        for (Map.Entry<String, String> entry : projections.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            transformedProjections.put(String.format("%s.toFirstLowerCase()", key), firstLowerCase(value));
-        }
-        projections.putAll(transformedProjections);
+    public static Map<String, Object> getProjections(Class<?> clazz) {
+        Map<String, Object> projections = new HashMap<>();
+        projections.put("prefix", MustacheString.of((String) CuspidSystem.get(PREFIX)));
+        projections.put("entity", MustacheClass.of(clazz));
         return projections;
     }
 

@@ -1,0 +1,47 @@
+package org.cuspid.generated.service.impl;
+
+import {{ entity.fullName }};
+import {{ entity.id.fullName }};
+import org.cuspid.generated.service.{{ prefix }}{{ entity.name }}Service;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import org.cuspid.generated.repository.{{ prefix }}{{ entity.name }}Repository;
+
+/**
+ * @author Do Quoc Viet
+ * This class is generated from Cuspid Api Generator.
+ * Please keep in mind that should not be edited directly.
+ */
+
+@Service
+public class {{ prefix }}{{ entity.name }}ServiceImpl implements {{ prefix }}{{ entity.name }}Service {
+
+    private final {{ prefix }}{{ entity.name }}Repository {{ prefix.firstLowercase }}{{ entity.name }}Repository;
+
+    {{ prefix }}{{ entity.name }}ServiceImpl({{ prefix }}{{ entity.name }}Repository {{ prefix.firstLowercase }}{{ entity.name }}Repository) {
+        this.{{ prefix.firstLowercase }}{{ entity.name }}Repository = {{ prefix.firstLowercase }}{{ entity.name }}Repository;
+    }
+
+    @Override
+    public List<{{ entity.name }}> get() {
+        return {{ prefix.firstLowercase }}{{ entity.name }}Repository.findAll();
+    }
+
+    @Override
+    public {{ entity.name }} get({{ entity.id.name }} id) {
+        return {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public {{ entity.name }} upsert({{ entity.name }} {{ entity.name.firstLowercase }}) {
+        return {{ prefix.firstLowercase }}{{ entity.name }}Repository.save({{ entity.name.firstLowercase }});
+    }
+
+    @Override
+    public {{ entity.name }} delete({{ entity.id.name }} id) {
+        {{ entity.name }} entity = {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find {{ entity.name }} with id " + id));
+        {{ prefix.firstLowercase }}{{ entity.name }}Repository.deleteById(id);
+        return entity;
+    }
+
+}

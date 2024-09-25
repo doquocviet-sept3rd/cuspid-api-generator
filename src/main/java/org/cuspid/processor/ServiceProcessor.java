@@ -1,5 +1,7 @@
 package org.cuspid.processor;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -9,16 +11,12 @@ import org.codehaus.plexus.util.FileUtils;
 import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.Generators;
-import org.cuspid.util.Strings;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-
-import static org.cuspid.constant.Template.SERVICE_IMPL_TEMPLATE;
-import static org.cuspid.constant.Template.SERVICE_TEMPLATE;
 
 /**
  * @author Do Quoc Viet
@@ -47,16 +45,18 @@ public class ServiceProcessor {
 
             for (Class<?> clazz : classes) {
                 String prefix = (String) CuspidSystem.get(CuspidSystemProperty.PREFIX);
-                Map<String, String> projections = Generators.getProjections(clazz);
+                Map<String, Object> projections = Generators.getProjections(clazz);
 
                 final String serviceFilename = String.format("%s\\%sService.java", serviceDir, prefix + clazz.getSimpleName());
                 try (final FileWriter serviceWriter = new FileWriter(serviceFilename)) {
-                    serviceWriter.write(Strings.substitute(SERVICE_TEMPLATE, projections));
+                    Mustache mustache = new DefaultMustacheFactory().compile("template/service.mustache");
+                    mustache.execute(serviceWriter, projections).flush();
                 }
 
                 final String serviceImplFilename = String.format("%s\\%sServiceImpl.java", serviceImplDir, prefix + clazz.getSimpleName());
                 try (final FileWriter serviceImplWriter = new FileWriter(serviceImplFilename)) {
-                    serviceImplWriter.write(Strings.substitute(SERVICE_IMPL_TEMPLATE, projections));
+                    Mustache mustache = new DefaultMustacheFactory().compile("template/service_impl.mustache");
+                    mustache.execute(serviceImplWriter, projections).flush();
                 }
             }
         } catch (IOException ioException) {

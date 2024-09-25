@@ -1,5 +1,7 @@
 package org.cuspid.processor;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -9,15 +11,12 @@ import org.codehaus.plexus.util.FileUtils;
 import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.system.CuspidSystem;
 import org.cuspid.util.Generators;
-import org.cuspid.util.Strings;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-
-import static org.cuspid.constant.Template.CONTROLLER_TEMPLATE;
 
 /**
  * @author Do Quoc Viet
@@ -43,10 +42,11 @@ public class ControllerProcessor {
 
             for (Class<?> clazz : classes) {
                 String prefix = (String) CuspidSystem.get(CuspidSystemProperty.PREFIX);
-                Map<String, String> projections = Generators.getProjections(clazz);
+                Map<String, Object> projections = Generators.getProjections(clazz);
                 final String filename = String.format("%s\\%sController.java", controllerDir, prefix + clazz.getSimpleName());
                 try (final FileWriter writer = new FileWriter(filename)) {
-                    writer.write(Strings.substitute(CONTROLLER_TEMPLATE, projections));
+                    Mustache mustache = new DefaultMustacheFactory().compile("template/controller.mustache");
+                    mustache.execute(writer, projections).flush();
                 }
             }
         } catch (IOException ioException) {

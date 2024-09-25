@@ -1,0 +1,23 @@
+package org.cuspid.generated.service;
+
+import {{ entity.fullName }};
+import {{ entity.id.fullName }};
+import java.util.List;
+
+/**
+ * @author Do Quoc Viet
+ * This class is generated from Cuspid Api Generator.
+ * Please keep in mind that should not be edited directly.
+ */
+
+public interface {{ prefix }}{{ entity.name }}Service {
+
+    List<{{ entity.name }}> get();
+
+    {{ entity.name }} get({{ entity.id.name }} id);
+
+    {{ entity.name }} upsert({{ entity.name }} {{ entity.name.firstLowercase }});
+
+    {{ entity.name }} delete({{ entity.id.name }} id);
+
+}

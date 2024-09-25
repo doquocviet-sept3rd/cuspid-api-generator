@@ -19,6 +19,7 @@
         <reflections.version>0.9.12</reflections.version>
         <lombok.version>1.18.34</lombok.version>
         <spring.boot.version>3.3.4</spring.boot.version>
+        <spullara-mustache.version>0.9.14</spullara-mustache.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,6 +55,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.spullara.mustache.java</groupId>
+            <artifactId>compiler</artifactId>
+            <version>${spullara-mustache.version}</version>
         </dependency>
     </dependencies>
 
