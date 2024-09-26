@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 import static org.cuspid.constant.CuspidSystemProperty.MAVEN_PROJECT;
+import static org.cuspid.constant.CuspidSystemProperty.OUTPUT_DIR;
 import static org.cuspid.constant.CuspidSystemProperty.PREFIX;
 
 /**
@@ -42,14 +43,18 @@ public class CodeGenMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject mavenProject;
 
-    @Parameter(readonly = true)
+    @Parameter(defaultValue = "Cuspid", readonly = true)
     private String prefix;
+
+    @Parameter(required = true)
+    private String outputDir;
 
     @Override
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public void execute() {
         log.info("""
+                
                 ########################################################################
                 # Thanks for using Cuspid Api Generator.                               #
                 # Please consider donation to help us maintain this project.😊         #
@@ -60,6 +65,7 @@ public class CodeGenMojo extends AbstractMojo {
         // Setting properties
         CuspidSystem.put(MAVEN_PROJECT, mavenProject);
         CuspidSystem.put(PREFIX, prefix);
+        CuspidSystem.put(OUTPUT_DIR, outputDir);
 
         try {
             final Function<URI, URL> uriToUrl = uri -> {

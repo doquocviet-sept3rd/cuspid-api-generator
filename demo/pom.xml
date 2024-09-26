@@ -86,7 +86,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <prefix>Cuspid</prefix>
+                            <outputDir>com/demo</outputDir>
                         </configuration>
                     </execution>
                 </executions>

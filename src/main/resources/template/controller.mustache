@@ -1,11 +1,11 @@
-package org.cuspid.generated.controller;
+package {{ path }}.controller;
 
 import {{ entity.fullName }};
 import {{ entity.id.fullName }};
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.cuspid.generated.service.{{ prefix }}{{ entity.name }}Service;
+import {{ path }}.service.{{ prefix }}{{ entity.name }}Service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

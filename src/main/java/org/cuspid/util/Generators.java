@@ -4,6 +4,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.cuspid.constant.CuspidSystemProperty;
 import org.cuspid.domain.MustacheClass;
 import org.cuspid.domain.MustacheString;
 import org.cuspid.system.CuspidSystem;
@@ -55,6 +56,8 @@ public class Generators {
         Map<String, Object> projections = new HashMap<>();
         projections.put("prefix", MustacheString.of((String) CuspidSystem.get(PREFIX)));
         projections.put("entity", MustacheClass.of(clazz));
+        String outputDir = (String) CuspidSystem.get(CuspidSystemProperty.OUTPUT_DIR);
+        projections.put("path", outputDir.replaceAll("[/\\\\]", ".") + ".cuspid");
         return projections;
     }
 

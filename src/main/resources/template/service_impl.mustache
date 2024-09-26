@@ -1,11 +1,12 @@
-package org.cuspid.generated.service.impl;
+package {{ path }}.service.impl;
 
 import {{ entity.fullName }};
 import {{ entity.id.fullName }};
-import org.cuspid.generated.service.{{ prefix }}{{ entity.name }}Service;
+import {{ path }}.service.{{ prefix }}{{ entity.name }}Service;
 import java.util.List;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.cuspid.generated.repository.{{ prefix }}{{ entity.name }}Repository;
+import {{ path }}.repository.{{ prefix }}{{ entity.name }}Repository;
 
 /**
  * @author Do Quoc Viet
@@ -14,6 +15,7 @@ import org.cuspid.generated.repository.{{ prefix }}{{ entity.name }}Repository;
  */
 
 @Service
+@Transactional
 public class {{ prefix }}{{ entity.name }}ServiceImpl implements {{ prefix }}{{ entity.name }}Service {
 
     private final {{ prefix }}{{ entity.name }}Repository {{ prefix.firstLowercase }}{{ entity.name }}Repository;
@@ -29,7 +31,7 @@ public class {{ prefix }}{{ entity.name }}ServiceImpl implements {{ prefix }}{{ 
 
     @Override
     public {{ entity.name }} get({{ entity.id.name }} id) {
-        return {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow();
+        return {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find {{ entity.name.firstLowercase }} with id " + id));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class {{ prefix }}{{ entity.name }}ServiceImpl implements {{ prefix }}{{ 
 
     @Override
     public {{ entity.name }} delete({{ entity.id.name }} id) {
-        {{ entity.name }} entity = {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find {{ entity.name }} with id " + id));
+        {{ entity.name }} entity = {{ prefix.firstLowercase }}{{ entity.name }}Repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Could not find {{ entity.name.firstLowercase }} with id " + id));
         {{ prefix.firstLowercase }}{{ entity.name }}Repository.deleteById(id);
         return entity;
     }

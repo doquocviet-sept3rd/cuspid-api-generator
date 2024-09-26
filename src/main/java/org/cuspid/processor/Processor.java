@@ -30,8 +30,8 @@ public class Processor {
         log.debug("Executing process");
 
         MavenProject mavenProject = (MavenProject) CuspidSystem.get(CuspidSystemProperty.MAVEN_PROJECT);
-        // TODO Convert to output build directory when available for production
-        String workingDirectory = String.format("%s\\org\\cuspid\\generated", mavenProject.getBuild().getSourceDirectory());
+        String outputDir = (String) CuspidSystem.get(CuspidSystemProperty.OUTPUT_DIR);
+        String workingDirectory = String.format("%s\\%s\\%s", mavenProject.getBuild().getSourceDirectory(), outputDir, "cuspid");
 
         try {
             // Create working directory
